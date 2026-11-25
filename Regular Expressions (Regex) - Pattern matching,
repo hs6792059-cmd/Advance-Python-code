@@ -1,0 +1,20 @@
+import re
+
+# Input text
+text = """
+Contact us at abc@gmail.com,
+student123@yahoo.com,
+test.email@outlook.com
+"""
+
+# Regular expression pattern for email
+pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+
+# Find all email addresses
+emails = re.findall(pattern, text)
+
+# Display results
+print("Email Addresses Found:")
+for email in emails:
+    print(email)
+```[cite: 1]
