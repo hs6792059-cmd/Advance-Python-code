@@ -1,0 +1,47 @@
+import gc
+import sys
+
+# Enable garbage collection
+gc.enable()
+
+# Function to display memory information
+def show_memory():
+    print("Garbage Objects:", len(gc.garbage))
+
+# Create a class
+class Demo:
+    def __init__(self, name):
+        self.name = name
+        self.ref = None
+
+# Display memory before garbage collection
+print("Before Garbage Collection:")
+show_memory()
+
+# Create objects
+obj1 = Demo("Object 1")
+obj2 = Demo("Object 2")
+
+# Create circular references
+obj1.ref = obj2
+obj2.ref = obj1
+
+print("\nObjects Created Successfully")
+
+# Delete references
+del obj1
+del obj2
+
+# Display objects before collection
+print("\nBefore Manual Collection:")
+print("Unreachable Objects:", gc.collect.__name__)
+
+# Manually collect garbage
+collected = gc.collect()
+
+# Display results
+print("\nAfter Garbage Collection:")
+print("Garbage Objects Collected:", collected)
+
+print("\nGarbage Collection Completed!")
+```[cite: 10, 11]
