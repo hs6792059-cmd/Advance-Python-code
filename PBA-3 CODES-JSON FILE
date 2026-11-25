@@ -1,0 +1,37 @@
+import json
+def display_high_earners(filename: str, min_salary: float) -> None:
+    try:
+        with open(filename, mode="r", encoding="utf-8") as file:
+            employees = json.load(file)
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+        return
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON format in '{filename}' ({e}).")
+        return
+    if not isinstance(employees, list):
+        print("Error: JSON root must be a list of employee records.")
+        return
+    matches = [
+        emp for emp in employees
+        if isinstance(emp, dict) and emp.get("salary", 0) > min_salary
+    ]
+    if not matches:
+        print(f"No employees found with salary greater than ₹{min_salary:,.2f}.")
+        return
+    print(f"\nEmployees with salary > ₹{min_salary:,.2f}:")
+    print("-" * 40)
+    for emp in matches:
+        print(
+            f"Emp ID : {emp.get('empid')}\n"
+            f"Name   : {emp.get('name', '').title()}\n"
+            f"Salary : ₹{emp.get('salary', 0):,.2f}\n"
+            f"{'-' * 40}"
+        )
+if __name__=="__main__":
+    file_path= "employees.json"
+    try:
+        threshold =float(input("Enter minimum salary threshold:"))
+        display_high_earners(file_path, threshold)
+    except ValueError:
+        print("Error: Please enter a valid numeric amt")
